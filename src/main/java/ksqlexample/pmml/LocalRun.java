@@ -17,7 +17,7 @@ public class LocalRun {
     /***
      * This is just to test the model loading and evaluation outside of KSQL.
      * Example usage:
-     *    java -cp ksql-ml-pmml-example-0.0.1-jar-with-dependencies.jar com.homeaway.cloud.LocalRun iris-pipeline.pmml 7.0,3.2,4.7,4.4
+     *    java -cp ksql-ml-pmml-example-0.0.1-jar-with-dependencies.jar ksqlexample.pmml.LocalRun iris-pipeline.pmml 7.0,3.2,4.7,4.4
      */
     public static void main(String[] args) {
         String modelPath = args[0];
