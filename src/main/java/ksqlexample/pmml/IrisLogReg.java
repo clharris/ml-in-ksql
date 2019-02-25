@@ -15,7 +15,11 @@ public class IrisLogReg {
     public String irisLogReg(Double sepalLength, Double sepalWidth, Double petalLength, Double petalWidth) {
         String modelPath = "/etc/ksql-server/ext/iris-pipeline.pmml";
 
-        List<Double> dataValues = Arrays.asList(sepalLength, sepalWidth, petalLength, petalWidth);
+       Map<String,Double> dataValues = new HashMap<>();
+        dataValues.put(PmmlUtils.SEPAL_LENGTH, sepalLength);
+        dataValues.put(PmmlUtils.SEPAL_WIDTH, sepalWidth);
+        dataValues.put(PmmlUtils.PETAL_LENGTH, petalLength);
+        dataValues.put(PmmlUtils.PETAL_WIDTH, petalWidth);
         Optional<Evaluator> evaluatorOptional = PmmlUtils.loadModel(modelPath);
 
         Map<String,?> resultRecord = new HashMap<>();

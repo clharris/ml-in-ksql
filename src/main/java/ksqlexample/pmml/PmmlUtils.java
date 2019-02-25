@@ -14,6 +14,11 @@ import java.util.Optional;
 
 public class PmmlUtils {
 
+    static String SEPAL_LENGTH = "sepal length (cm)";
+    static String SEPAL_WIDTH  = "sepal width (cm)";
+    static String PETAL_LENGTH = "petal length (cm)";
+    static String PETAL_WIDTH  = "petal width (cm)";
+
     static Optional<Evaluator> loadModel(String modelPath) {
 
         Optional<Evaluator> evaluatorOptional = Optional.empty();
@@ -32,7 +37,7 @@ public class PmmlUtils {
         return evaluatorOptional;
     }
 
-    static <T> Map<FieldName,FieldValue> readRecord(List<T> dataValues, List<? extends InputField> inputFields) {
+    static <T> Map<FieldName,FieldValue> readRecord(Map<String, T> dataValues, List<? extends InputField> inputFields) {
         Map<FieldName, FieldValue> output = new HashMap<>();
 
         if(dataValues.size() != inputFields.size()){
@@ -40,9 +45,11 @@ public class PmmlUtils {
             return output;
         }
 
-        for(int i = 0; i < inputFields.size(); i++){
-            InputField inputField = inputFields.get(i);
-            FieldValue inputValue = inputField.prepare(dataValues.get(i));
+        for(InputField inputField: inputFields){
+//            System.out.println("Input field:" + inputField);
+            String fieldName = inputField.getName().toString();
+            FieldValue inputValue = inputField.prepare(dataValues.get(fieldName));
+//            System.out.println("Input value:" + inputValue);
             output.put(inputField.getName(),inputValue);
         }
 
