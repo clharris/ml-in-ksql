@@ -11,16 +11,24 @@ import java.util.*;
 @UdfDescription(name = "irisLogReg", description = "Iris data example. Model built using logistic regression.")
 public class IrisLogReg {
 
+    String modelPath = "/etc/ksql-server/ext/iris-pipeline.pmml";
+    Optional<Evaluator> evaluatorOptional = null;
+    boolean modelInitialized = false;
+
+
     @Udf(description = "Iris data example. Model built using logistic regression.")
     public String irisLogReg(Double sepalLength, Double sepalWidth, Double petalLength, Double petalWidth) {
-        String modelPath = "/etc/ksql-server/ext/iris-pipeline.pmml";
+
+        if(!modelInitialized){
+            evaluatorOptional = PmmlUtils.loadModel(modelPath);
+            modelInitialized=true;
+        }
 
        Map<String,Double> dataValues = new HashMap<>();
         dataValues.put(PmmlUtils.SEPAL_LENGTH, sepalLength);
         dataValues.put(PmmlUtils.SEPAL_WIDTH, sepalWidth);
         dataValues.put(PmmlUtils.PETAL_LENGTH, petalLength);
         dataValues.put(PmmlUtils.PETAL_WIDTH, petalWidth);
-        Optional<Evaluator> evaluatorOptional = PmmlUtils.loadModel(modelPath);
 
         Map<String,?> resultRecord = new HashMap<>();
 

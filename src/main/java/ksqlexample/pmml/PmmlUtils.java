@@ -21,6 +21,8 @@ public class PmmlUtils {
 
     static Optional<Evaluator> loadModel(String modelPath) {
 
+        System.out.println("Model loaded!");
+
         Optional<Evaluator> evaluatorOptional = Optional.empty();
 
         try {
